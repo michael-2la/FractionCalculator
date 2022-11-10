@@ -1,9 +1,14 @@
 import java.util.Scanner;
 public class FracCalc {
-
+    public static int whole;
+    public static int numerator;
+    public static int denominator;
     public static void main(String[] args) 
     {
         // TODO: Read the input from the user and call produceAnswer with an equation
+        whole = 0;
+        numerator = 0;
+        denominator = 1;
         Scanner scan = new Scanner(System.in);
 
 
@@ -28,27 +33,44 @@ public class FracCalc {
         String first = scan.next();
         String operat = scan.next();
         String second = scan.next();
-        findFrac(first);
+
         findFrac(second);
         
 
+        if (second.contains("/")) {
+            return "whole:" + whole + " numerator:" + numerator + " denominator:" + denominator;
+        }
+        else {
+            return "whole:" + second + " numerator:" + "0" + " denominator:" + "1";
+        }
 
 
-        return second;
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
     public static boolean findFrac(String frac) {
         Scanner scan = new Scanner(frac);
-        // splits according to mixed vs proper fractions
-        String[] mixedFrac = frac.split("_");
-        int wholeNum = Integer.valueOf(mixedFrac[0]);
-        
-        // splits fraction into numerator and denominator
-        String[] properFrac = mixedFrac[1].split("/");
-        int numerator = Integer.valueOf(properFrac[0]);
-        int denominator = Integer.valueOf(properFrac[1]);
+        // if mixed fraction, split whole and fractional then split numerator and denominator
+        int wholeNum = 0;
+        int numer = 0;
+        int denom = 0;
+        if (frac.contains("_")) {
+            String[] mixedFrac = frac.split("_");
+            whole = Integer.parseInt(mixedFrac[0]);
+            // splits fraction into numerator and denominator
+            String[] properFrac = mixedFrac[1].split("/");
+            numerator = Integer.parseInt(properFrac[0]);
+            denominator = Integer.parseInt(properFrac[1]);
+        }
+        // if proper fraction, split according to numerator/denominator
+        else if (frac.contains("/")){
+                String[] properFrac = frac.split("/");
+                numerator = Integer.parseInt(properFrac[0]);
+                denominator = Integer.parseInt(properFrac[1]);
+        }
+
         return true;
+
     }
     
 }
