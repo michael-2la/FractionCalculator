@@ -21,57 +21,34 @@ public class FracCalc {
     public static String produceAnswer(String input)
     { 
         // TODO: Implement this function to produce the solution to the input
-        Scanner scan = new Scanner(System.in);
-        if (input.contains('+') == true) {
-            scan.useDelimiter("+");
-        }
-        else if (input.contains('-') == true) {
-            scan.useDelimiter("-");
-        }
-        else if (input.contains('*') == true) {
-            scan.useDelimiter("*");
-        }
-        else if (input.contains('/') == true) {
-            scan.useDelimiter("/");
-        }
-        String first;
-        String second;
-        if (scan.hasNext()) {
-            first = String.valueOf(scan.hasNext());
-        }
-        if (scan.hasNext()) {
-            second = String.valueOf(scan.hasNext());
-        }
-        // check if improper fraction:
-        String full1;
-        String fract1;
-        String full2;
-        String fract2;
+        Scanner scan = new Scanner(input);
+        
+        scan.useDelimiter(" ");
 
-        if (first.contains('_') == true) {
-            for (int i=0;i<first.indexOf('_'); i++) {
-                full1 = full1 + first.substring(i, i);
-            }
-            for (int i=first.indexOf('/'); i<first.length(); i++) {
-                fract1 = fract1 + first.substring(i, i);
-            }
-
-        }
-        if (second.contains('_') == true) {
-            for (int i=0;i<second.indexOf('_'); i++) {
-                full2 = full2 + second.substring(i, i);
-            }
-            for (int i=second.indexOf('/'); i<second.length(); i++) {
-                fract2 = fract2 + second.substring(i, i);
-            }
-
-        }
+        String first = scan.next();
+        String operat = scan.next();
+        String second = scan.next();
+        findFrac(first);
+        findFrac(second);
+        
 
 
 
-        return "";
+        return second;
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
+    public static boolean findFrac(String frac) {
+        Scanner scan = new Scanner(frac);
+        // splits according to mixed vs proper fractions
+        String[] mixedFrac = frac.split("_");
+        int wholeNum = Integer.valueOf(mixedFrac[0]);
+        
+        // splits fraction into numerator and denominator
+        String[] properFrac = mixedFrac[1].split("/");
+        int numerator = Integer.valueOf(properFrac[0]);
+        int denominator = Integer.valueOf(properFrac[1]);
+        return true;
+    }
     
 }
