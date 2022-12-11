@@ -46,27 +46,29 @@ public class FracCalc {
         String operat = scan.next();
         String second = scan.next();
 
-        String ans = "";
+
 
         findFrac1(first);
-        findFrac1(second);
+        findFrac2(second);
 
-        if (operat == "+") {
+        if (operat.equals("+")) {
             addition();
-            System.out.println(answer);
+            return answer;
         }
-        else if (operat == "-") {
+        else if (operat.equals("-")) {
             subtraction();
-            System.out.println(answer);
+            return answer;
         }
-        else if (operat == "*") {
+        else if (operat.equals("*")) {
             multiplication();
-            System.out.println(answer);
+            return answer;
         }
-        else if (operat == "/") {
+        else if (operat.equals("/")) {
             division();
-            System.out.println(answer);
+            return answer;
         }
+
+        return "";
 
 
     }
@@ -91,6 +93,10 @@ public class FracCalc {
                 String[] properFrac = frac.split("/");
                 numerator1 = Integer.parseInt(properFrac[0]);
                 denominator1 = Integer.parseInt(properFrac[1]);
+        }
+        else {
+            numerator1 = Integer.parseInt(frac);
+            denominator1 = 1;
         }
 
         return true;
@@ -117,6 +123,10 @@ public class FracCalc {
                 numerator2 = Integer.parseInt(properFrac[0]);
                 denominator2 = Integer.parseInt(properFrac[1]);
         }
+        else {
+            numerator2 = Integer.parseInt(frac);
+            denominator2 = 1;
+        }
 
         return true;
 
@@ -125,10 +135,22 @@ public class FracCalc {
     public static boolean addition() {
         // turns into mixed fraction
         if (whole1 != 0) {
-            numerator1 = numerator1 + (whole1 * denominator1);
+            if (whole1 < 0) {
+                numerator1 = -(numerator1 - (whole1 * (denominator1)));
+            }
+            else {
+                numerator1 = numerator1 + (whole1 * denominator1);
+            }
+
         }
         if (whole2 != 0) {
-            numerator2 = numerator2 + (whole2 * denominator2);
+            if (whole2 < 0) {
+                numerator2 = -(numerator2 - (whole2 * (denominator2)));
+            }
+            else {
+                numerator2 = numerator2 + (whole2 * denominator2);
+            }
+
         }
 
         // if denominators are equal:
@@ -138,34 +160,40 @@ public class FracCalc {
         }
         // if denominators not equal:
         else {
-            int lcm = 0;
-            int oldDenom1 = denominator1;
-            int oldDenom2 = denominator2;
 
-            // find lcm of denominators
-            for (int i=1; i<= denominator1 && i <= denominator2; i++) {
-                if (denominator1 & i == 0 && denominator2 & i == 0) {
-                    lcm = (denominator1 * denominator2) / i;
-                }
-            }
+            // find common denominator
+            int newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
-            numerator1 = numerator1 * (lcm / oldDenom1);
-            numerator2 = numerator2 * (lcm / oldDenom2);
+            numerator1 = numerator1 * (newDenom / denominator1);
+            numerator2 = numerator2 * (newDenom / denominator2);
 
             // now add values:
             int mixedAns = numerator1 + numerator2;
-            answer = mixedAns + "/" denominator2;
+            answer = mixedAns + "/" + newDenom;
         }
+        return true;
 
     }
 
     public static boolean subtraction() {
         // turns into mixed fraction
         if (whole1 != 0) {
-            numerator1 = numerator1 + (whole1 * denominator1);
+            if (whole1 < 0) {
+                numerator1 = -(numerator1 - (whole1 * (denominator1)));
+            }
+            else {
+                numerator1 = numerator1 + (whole1 * denominator1);
+            }
+
         }
         if (whole2 != 0) {
-            numerator2 = numerator2 + (whole2 * denominator2);
+            if (whole2 < 0) {
+                numerator2 = -(numerator2 - (whole2 * (denominator2)));
+            }
+            else {
+                numerator2 = numerator2 + (whole2 * denominator2);
+            }
+
         }
 
         // if denominators are equal:
@@ -175,34 +203,40 @@ public class FracCalc {
         }
         // if denominators not equal:
         else {
-            int lcm = 0;
-            int oldDenom1 = denominator1;
-            int oldDenom2 = denominator2;
 
-            // find lcm of denominators
-            for (int i=1; i<= denominator1 && i <= denominator2; i++) {
-                if (denominator1 & i == 0 && denominator2 & i == 0) {
-                    lcm = (denominator1 * denominator2) / i;
-                }
-            }
+            // find common denominator
+            int newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
-            numerator1 = numerator1 * (lcm / oldDenom1);
-            numerator2 = numerator2 * (lcm / oldDenom2);
+            numerator1 = numerator1 * (newDenom / denominator1);
+            numerator2 = numerator2 * (newDenom / denominator2);
 
             // now add values:
             int mixedAns = numerator1 - numerator2;
-            answer = mixedAns + "/" denominator2;
+            answer = mixedAns + "/" + denominator2;
         }
+        return true;
 
     }
 
     public static boolean multiplication() {
         // turns into mixed fraction
         if (whole1 != 0) {
-            numerator1 = numerator1 + (whole1 * denominator1);
+            if (whole1 < 0) {
+                numerator1 = -(numerator1 - (whole1 * (denominator1)));
+            }
+            else {
+                numerator1 = numerator1 + (whole1 * denominator1);
+            }
+
         }
         if (whole2 != 0) {
-            numerator2 = numerator2 + (whole2 * denominator2);
+            if (whole2 < 0) {
+                numerator2 = -(numerator2 - (whole2 * (denominator2)));
+            }
+            else {
+                numerator2 = numerator2 + (whole2 * denominator2);
+            }
+
         }
 
         // if denominators are equal:
@@ -212,34 +246,40 @@ public class FracCalc {
         }
         // if denominators not equal:
         else {
-            int lcm = 0;
-            int oldDenom1 = denominator1;
-            int oldDenom2 = denominator2;
 
-            // find lcm of denominators
-            for (int i=1; i<= denominator1 && i <= denominator2; i++) {
-                if (denominator1 & i == 0 && denominator2 & i == 0) {
-                    lcm = (denominator1 * denominator2) / i;
-                }
-            }
+            // find common denominator
+            int newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
-            numerator1 = numerator1 * (lcm / oldDenom1);
-            numerator2 = numerator2 * (lcm / oldDenom2);
+            numerator1 = numerator1 * (newDenom / denominator1);
+            numerator2 = numerator2 * (newDenom / denominator2);
 
             // now add values:
             int mixedAns = numerator1 * numerator2;
-            answer = mixedAns + "/" denominator2;
+            answer = mixedAns + "/" + denominator2;
         }
+        return true;
 
     }
 
-    public static boolean multiplacation() {
+    public static boolean division() {
         // turns into mixed fraction
         if (whole1 != 0) {
-            numerator1 = numerator1 + (whole1 * denominator1);
+            if (whole1 < 0) {
+                numerator1 = -(numerator1 - (whole1 * (denominator1)));
+            }
+            else {
+                numerator1 = numerator1 + (whole1 * denominator1);
+            }
+
         }
         if (whole2 != 0) {
-            numerator2 = numerator2 + (whole2 * denominator2);
+            if (whole2 < 0) {
+                numerator2 = -(numerator2 - (whole2 * (denominator2)));
+            }
+            else {
+                numerator2 = numerator2 + (whole2 * denominator2);
+            }
+
         }
 
         // if denominators are equal:
@@ -249,24 +289,18 @@ public class FracCalc {
         }
         // if denominators not equal:
         else {
-            int lcm = 0;
-            int oldDenom1 = denominator1;
-            int oldDenom2 = denominator2;
 
-            // find lcm of denominators
-            for (int i=1; i<= denominator1 && i <= denominator2; i++) {
-                if (denominator1 & i == 0 && denominator2 & i == 0) {
-                    lcm = (denominator1 * denominator2) / i;
-                }
-            }
+            // find common denominator
+            int newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
-            numerator1 = numerator1 * (lcm / oldDenom1);
-            numerator2 = numerator2 * (lcm / oldDenom2);
+            numerator1 = numerator1 * (newDenom / denominator1);
+            numerator2 = numerator2 * (newDenom / denominator2);
 
             // now add values:
             double mixedAns = (double) numerator1 / numerator2;
-            answer = mixedAns + "/" denominator2;
+            answer = mixedAns + "/" + denominator2;
         }
+        return true;
 
     }
     
