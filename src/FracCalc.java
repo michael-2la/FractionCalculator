@@ -133,6 +133,8 @@ public class FracCalc {
     }
 
     public static boolean addition() {
+        int mixedAns;
+        int newDenom;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -154,14 +156,27 @@ public class FracCalc {
 
         // if denominators are equal:
         if (denominator1 == denominator2) {
-            int finalNumer = numerator1 + numerator2;
-            answer = finalNumer + "/" + denominator1;
+            mixedAns = numerator1 + numerator2;
+            newDenom = denominator2;
+            int gcf = 1;
+            // find gcf
+            for(int i = 1; i <= mixedAns && i <= newDenom; i++) {
+                // returns true
+                if(mixedAns%i==0 && newDenom%i==0)
+                    // gcf found
+                    gcf = i;
+            }
+            // reduce numerator and denominator
+            mixedAns = mixedAns/gcf;
+            newDenom = newDenom/gcf;
+            // return reduced fraction
+            answer = mixedAns + "/" + newDenom;
         }
         // if denominators not equal:
         else {
 
             // find common denominator
-            int newDenom = denominator1 * denominator2;
+            newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
             // if it is a whole number:
             if (denominator1 == 1) {
@@ -179,14 +194,34 @@ public class FracCalc {
             }
 
             // now add values:
-            int mixedAns = numerator1 + numerator2;
+            mixedAns = numerator1 + numerator2;
+
+            // simplify answer:
+            int gcf = 1;
+            // find gcf
+            for(int i = 1; i <= mixedAns && i <= newDenom; i++) {
+                // returns true
+                if(mixedAns%i==0 && newDenom%i==0)
+                    // gcf found
+                    gcf = i;
+            }
+            // reduce numerator and denominator
+            mixedAns = mixedAns/gcf;
+            newDenom = newDenom/gcf;
+            // return reduced fraction
             answer = mixedAns + "/" + newDenom;
+
+
+
+
         }
         return true;
 
     }
 
     public static boolean subtraction() {
+        int mixedAns;
+        int newDenom;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -209,39 +244,65 @@ public class FracCalc {
 
         // if denominators are equal:
         if (denominator1 == denominator2) {
-            int finalNumer = numerator1 - numerator2;
-            answer = finalNumer + "/" + denominator1;
+            mixedAns = numerator1 + numerator2;
+            newDenom = denominator2;
+            int gcf = 1;
+            // find gcf
+            for(int i = 1; i <= mixedAns && i <= newDenom; i++) {
+                // returns true
+                if(mixedAns%i==0 && newDenom%i==0)
+                    // gcf found
+                    gcf = i;
+            }
+            // reduce numerator and denominator
+            mixedAns = mixedAns/gcf;
+            newDenom = newDenom/gcf;
+            // return reduced fraction
+            answer = mixedAns + "/" + newDenom;
         }
         // if denominators not equal:
         else {
 
             // find common denominator
-            int newDenom = denominator1 * denominator2;
+             newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
             // if it is a whole number:
             if (denominator1 == 1) {
                 numerator1 = newDenom * numerator1;
-            }
-            else {
+            } else {
                 numerator1 = numerator1 * (newDenom / denominator1);
             }
             // if it is a whole number:
             if (denominator2 == 1) {
                 numerator2 = newDenom * numerator2;
-            }
-            else {
+            } else {
                 numerator2 = numerator2 * (newDenom / denominator2);
             }
 
             // now add values:
-            int mixedAns = numerator1 - numerator2;
+             mixedAns = numerator1 - numerator2;
+
+            // simplify answer:
+            int gcf = 1;
+            // find gcf
+            for(int i = 1; i <= mixedAns && i <= newDenom; i++) {
+                // returns true
+                if(mixedAns%i==0 && newDenom%i==0)
+                    // gcf found
+                    gcf = i;
+            }
+            // reduce numerator and denominator
+            mixedAns = mixedAns/gcf;
+            newDenom = newDenom/gcf;
+            // return reduced fraction
             answer = mixedAns + "/" + newDenom;
         }
         return true;
-
     }
 
     public static boolean multiplication() {
+        int mixedAns;
+        int newDenom;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -262,15 +323,32 @@ public class FracCalc {
         }
 
         // for multiplication: simply multiply across
-        int mixedAns = numerator1 * numerator2;
-        int newDenom = denominator1 * denominator2;
+         mixedAns = numerator1 * numerator2;
+         newDenom = denominator1 * denominator2;
+
+        // simplify answer
+        int gcf = 1;
+        // find gcf
+        for(int i = 1; i <= mixedAns && i <= newDenom; i++) {
+            // returns true
+            if(mixedAns%i==0 && newDenom%i==0)
+                // gcf found
+                gcf = i;
+        }
+        // reduce numerator and denominator
+        mixedAns = mixedAns/gcf;
+        newDenom = newDenom/gcf;
+        // return reduced fraction
         answer = mixedAns + "/" + newDenom;
+
 
         return true;
 
     }
 
     public static boolean division() {
+        int mixedAns;
+        int newDenom;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -291,9 +369,24 @@ public class FracCalc {
 
         }
         // for division, switch numerators and denominators:
-        int newDenom = denominator1 * numerator2;
-        int mixedAns = numerator1 * denominator2;
+         newDenom = denominator1 * numerator2;
+         mixedAns = numerator1 * denominator2;
+
+        // simplify answer:
+        int gcf = 1;
+        // find gcf
+        for(int i = 1; i <= mixedAns && i <= newDenom; i++) {
+            // returns true
+            if(mixedAns%i==0 && newDenom%i==0)
+                // gcf found
+                gcf = i;
+        }
+        // reduce numerator and denominator
+        mixedAns = mixedAns/gcf;
+        newDenom = newDenom/gcf;
+        // return reduced fraction
         answer = mixedAns + "/" + newDenom;
+
 
         return true;
 
