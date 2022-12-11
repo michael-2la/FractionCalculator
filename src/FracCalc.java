@@ -9,7 +9,7 @@ public class FracCalc {
     public static int operator;
 
     public static String answer;
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
         // TODO: Read the input from the user and call produceAnswer with an equation
         whole1 = 0;
@@ -20,36 +20,45 @@ public class FracCalc {
         denominator2 = 1;
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter a fraction expression: ");
-        String userInput = scan.next();
+        String userInput = scan.nextLine();
 
         produceAnswer(userInput);
+        System.out.println(answer);
 
 
 
     }
-    
+
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
     // This function takes a String 'input' and produces the result
     //
     // input is a fraction string that needs to be evaluated.  For your program, this will be the user input.
     //      e.g. input ==> "1/2 + 3/4"
-    //        
+    //
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
     public static String produceAnswer(String input) {
         // TODO: Implement this function to produce the solution to the input
         Scanner scan = new Scanner(input);
-        
+
         scan.useDelimiter(" ");
 
         String first = scan.next();
         String operat = scan.next();
         String second = scan.next();
 
+        // validate if the fractions are valid, if the operator is valid (Extra Credit)
+        validateNums(first,second);
+        // validateOper(operat);
 
 
         findFrac1(first);
         findFrac2(second);
+
+        // validate if numerators/denominators/wholes of expression are valid (Extra Credit)
+        validateParts();
+
+
 
         if (operat.equals("+")) {
             addition();
@@ -68,18 +77,55 @@ public class FracCalc {
             return answer;
         }
 
+
+
         return "";
 
 
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
+
+
+    public static void validateOper(String operators) {
+        if (operators.equals("+") == false || operators.equals("-") == false || operators.equals("*") == false || operators.equals("/") == false) {
+            System.out.println("ERROR: Invalid operator!");
+        }
+    }
+
+    public static String validateNums(String firsts, String seconds) {
+        for (int i=0; i<firsts.length(); i++) {
+            // if the character is not a number:
+            if (firsts.charAt(i) < '0' || firsts.charAt(i) > '9') {
+                if (firsts.charAt(i) != '/' && firsts.charAt(i) != '_') {
+                    return "ERROR: Non-digit fraction!";
+                }
+            }
+
+        }
+        for (int i=0; i<seconds.length(); i++) {
+            // if the character is not a number:
+            if (seconds.charAt(i) < '0' || seconds.charAt(i) > '9') {
+                if (seconds.charAt(i) != '/' && seconds.charAt(i) != '_') {
+                    return "ERROR: Non-digit fraction!";
+                }
+            }
+        }
+        return "";
+
+    }
+
+    public static String validateParts() {
+        if (denominator1 == 0 || denominator2 == 0) {
+            return "ERROR: Cannot divide by 0";
+        }
+        return "";
+    }
+
+
     public static boolean findFrac1(String frac) {
         Scanner scan = new Scanner(frac);
         // if mixed fraction, split whole and fractional then split numerator and denominator
-        int wholeNum = 0;
-        int numer = 0;
-        int denom = 0;
         if (frac.contains("_")) {
             String[] mixedFrac = frac.split("_");
             whole1 = Integer.parseInt(mixedFrac[0]);
@@ -90,9 +136,9 @@ public class FracCalc {
         }
         // if proper fraction, split according to numerator/denominator
         else if (frac.contains("/")){
-                String[] properFrac = frac.split("/");
-                numerator1 = Integer.parseInt(properFrac[0]);
-                denominator1 = Integer.parseInt(properFrac[1]);
+            String[] properFrac = frac.split("/");
+            numerator1 = Integer.parseInt(properFrac[0]);
+            denominator1 = Integer.parseInt(properFrac[1]);
         }
         else {
             numerator1 = Integer.parseInt(frac);
@@ -106,9 +152,6 @@ public class FracCalc {
     public static boolean findFrac2(String frac) {
         Scanner scan = new Scanner(frac);
         // if mixed fraction, split whole and fractional then split numerator and denominator
-        int wholeNum = 0;
-        int numer = 0;
-        int denom = 0;
         if (frac.contains("_")) {
             String[] mixedFrac = frac.split("_");
             whole2 = Integer.parseInt(mixedFrac[0]);
@@ -119,9 +162,9 @@ public class FracCalc {
         }
         // if proper fraction, split according to numerator/denominator
         else if (frac.contains("/")){
-                String[] properFrac = frac.split("/");
-                numerator2 = Integer.parseInt(properFrac[0]);
-                denominator2 = Integer.parseInt(properFrac[1]);
+            String[] properFrac = frac.split("/");
+            numerator2 = Integer.parseInt(properFrac[0]);
+            denominator2 = Integer.parseInt(properFrac[1]);
         }
         else {
             numerator2 = Integer.parseInt(frac);
@@ -169,8 +212,17 @@ public class FracCalc {
             // reduce numerator and denominator
             mixedAns = mixedAns/gcf;
             newDenom = newDenom/gcf;
-            // return reduced fraction
-            answer = mixedAns + "/" + newDenom;
+            // return reduced fraction, also checking for special cases
+            if (mixedAns == 0) {
+                // for numerator = 0 cases
+                answer = "0";
+            }
+            else if (newDenom == 1) {
+                answer = String.valueOf(mixedAns);
+            }
+            else {
+                answer = mixedAns + "/" + newDenom;
+            }
         }
         // if denominators not equal:
         else {
@@ -209,7 +261,16 @@ public class FracCalc {
             mixedAns = mixedAns/gcf;
             newDenom = newDenom/gcf;
             // return reduced fraction
-            answer = mixedAns + "/" + newDenom;
+            if (mixedAns == 0) {
+                // for numerator = 0 cases
+                answer = "0";
+            }
+            else if (newDenom == 1) {
+                answer = String.valueOf(mixedAns);
+            }
+            else {
+                answer = mixedAns + "/" + newDenom;
+            }
 
 
 
@@ -258,13 +319,22 @@ public class FracCalc {
             mixedAns = mixedAns/gcf;
             newDenom = newDenom/gcf;
             // return reduced fraction
-            answer = mixedAns + "/" + newDenom;
+            if (mixedAns == 0) {
+                // for numerator = 0 cases
+                answer = "0";
+            }
+            else if (newDenom == 1) {
+                answer = String.valueOf(mixedAns);
+            }
+            else {
+                answer = mixedAns + "/" + newDenom;
+            }
         }
         // if denominators not equal:
         else {
 
             // find common denominator
-             newDenom = denominator1 * denominator2;
+            newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
             // if it is a whole number:
             if (denominator1 == 1) {
@@ -280,7 +350,7 @@ public class FracCalc {
             }
 
             // now add values:
-             mixedAns = numerator1 - numerator2;
+            mixedAns = numerator1 - numerator2;
 
             // simplify answer:
             int gcf = 1;
@@ -295,7 +365,16 @@ public class FracCalc {
             mixedAns = mixedAns/gcf;
             newDenom = newDenom/gcf;
             // return reduced fraction
-            answer = mixedAns + "/" + newDenom;
+            if (mixedAns == 0) {
+                // for numerator = 0 cases
+                answer = "0";
+            }
+            else if (newDenom == 1) {
+                answer = String.valueOf(mixedAns);
+            }
+            else {
+                answer = mixedAns + "/" + newDenom;
+            }
         }
         return true;
     }
@@ -323,8 +402,8 @@ public class FracCalc {
         }
 
         // for multiplication: simply multiply across
-         mixedAns = numerator1 * numerator2;
-         newDenom = denominator1 * denominator2;
+        mixedAns = numerator1 * numerator2;
+        newDenom = denominator1 * denominator2;
 
         // simplify answer
         int gcf = 1;
@@ -339,7 +418,16 @@ public class FracCalc {
         mixedAns = mixedAns/gcf;
         newDenom = newDenom/gcf;
         // return reduced fraction
-        answer = mixedAns + "/" + newDenom;
+        if (mixedAns == 0) {
+            // for numerator = 0 cases
+            answer = "0";
+        }
+        else if (newDenom == 1) {
+            answer = String.valueOf(mixedAns);
+        }
+        else {
+            answer = mixedAns + "/" + newDenom;
+        }
 
 
         return true;
@@ -369,8 +457,8 @@ public class FracCalc {
 
         }
         // for division, switch numerators and denominators:
-         newDenom = denominator1 * numerator2;
-         mixedAns = numerator1 * denominator2;
+        newDenom = denominator1 * numerator2;
+        mixedAns = numerator1 * denominator2;
 
         // simplify answer:
         int gcf = 1;
@@ -385,11 +473,20 @@ public class FracCalc {
         mixedAns = mixedAns/gcf;
         newDenom = newDenom/gcf;
         // return reduced fraction
-        answer = mixedAns + "/" + newDenom;
+        if (mixedAns == 0) {
+            // for numerator = 0 cases
+            answer = "0";
+        }
+        else if (newDenom == 1) {
+            answer = String.valueOf(mixedAns);
+        }
+        else {
+            answer = mixedAns + "/" + newDenom;
+        }
 
 
         return true;
 
     }
-    
+
 }
