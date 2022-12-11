@@ -150,7 +150,6 @@ public class FracCalc {
             else {
                 numerator2 = numerator2 + (whole2 * denominator2);
             }
-
         }
 
         // if denominators are equal:
@@ -164,8 +163,20 @@ public class FracCalc {
             // find common denominator
             int newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
-            numerator1 = numerator1 * (newDenom / denominator1);
-            numerator2 = numerator2 * (newDenom / denominator2);
+            // if it is a whole number:
+            if (denominator1 == 1) {
+                numerator1 = newDenom * numerator1;
+            }
+            else {
+                numerator1 = numerator1 * (newDenom / denominator1);
+            }
+            // if it is a whole number:
+            if (denominator2 == 1) {
+                numerator2 = newDenom * numerator2;
+            }
+            else {
+                numerator2 = numerator2 * (newDenom / denominator2);
+            }
 
             // now add values:
             int mixedAns = numerator1 + numerator2;
@@ -207,12 +218,24 @@ public class FracCalc {
             // find common denominator
             int newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
-            numerator1 = numerator1 * (newDenom / denominator1);
-            numerator2 = numerator2 * (newDenom / denominator2);
+            // if it is a whole number:
+            if (denominator1 == 1) {
+                numerator1 = newDenom * numerator1;
+            }
+            else {
+                numerator1 = numerator1 * (newDenom / denominator1);
+            }
+            // if it is a whole number:
+            if (denominator2 == 1) {
+                numerator2 = newDenom * numerator2;
+            }
+            else {
+                numerator2 = numerator2 * (newDenom / denominator2);
+            }
 
             // now add values:
             int mixedAns = numerator1 - numerator2;
-            answer = mixedAns + "/" + denominator2;
+            answer = mixedAns + "/" + newDenom;
         }
         return true;
 
@@ -236,27 +259,13 @@ public class FracCalc {
             else {
                 numerator2 = numerator2 + (whole2 * denominator2);
             }
-
         }
 
-        // if denominators are equal:
-        if (denominator1 == denominator2) {
-            int finalNumer = numerator1 * numerator2;
-            answer = finalNumer + "/" + denominator1;
-        }
-        // if denominators not equal:
-        else {
+        // for multiplication: simply multiply across
+        int mixedAns = numerator1 * numerator2;
+        int newDenom = denominator1 * denominator2;
+        answer = mixedAns + "/" + newDenom;
 
-            // find common denominator
-            int newDenom = denominator1 * denominator2;
-            // now convert fractions into having same denominator
-            numerator1 = numerator1 * (newDenom / denominator1);
-            numerator2 = numerator2 * (newDenom / denominator2);
-
-            // now add values:
-            int mixedAns = numerator1 * numerator2;
-            answer = mixedAns + "/" + denominator2;
-        }
         return true;
 
     }
@@ -281,25 +290,11 @@ public class FracCalc {
             }
 
         }
+        // for division, switch numerators and denominators:
+        int newDenom = denominator1 * numerator2;
+        int mixedAns = numerator1 * denominator2;
+        answer = mixedAns + "/" + newDenom;
 
-        // if denominators are equal:
-        if (denominator1 == denominator2) {
-            double finalNumer = (double) numerator1 / numerator2;
-            answer = finalNumer + "/" + denominator1;
-        }
-        // if denominators not equal:
-        else {
-
-            // find common denominator
-            int newDenom = denominator1 * denominator2;
-            // now convert fractions into having same denominator
-            numerator1 = numerator1 * (newDenom / denominator1);
-            numerator2 = numerator2 * (newDenom / denominator2);
-
-            // now add values:
-            double mixedAns = (double) numerator1 / numerator2;
-            answer = mixedAns + "/" + denominator2;
-        }
         return true;
 
     }
