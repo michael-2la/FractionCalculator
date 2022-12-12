@@ -96,6 +96,38 @@ public class FracCalc {
 
     }
 
+    public static void mixedFraction(int nums, int denoms) {
+        // mixed fraction check:
+        int wholes;
+        if (nums/denoms > 0) {
+            wholes = nums/denoms;
+
+            if (nums < 0 ) {
+                // makes only the whole number negative for formatting
+                nums = -1 * nums;
+                // update new numerator
+                nums = nums - (wholes * denoms);
+                answer = wholes + "_" + nums + "/" + denoms;
+            }
+            else if (denoms < 0) {
+                // makes only the whole number negative for formatting
+                denoms = -1 * denoms;
+                // update new numerator
+                nums = nums - (wholes * denoms);
+                answer = wholes + "_" + nums + "/" + denoms;
+            }
+            else {
+                // update new numerator
+                nums = nums - (wholes * denoms);
+                answer = wholes + "_" + nums + "/" + denoms;
+            }
+        }
+        else {
+            // if the fraction is proper
+            answer = nums + "/" + denoms;
+        }
+    }
+
     public static void validateOper(String operators) {
         if (operators.equals("+") == false || operators.equals("-") == false || operators.equals("*") == false || operators.equals("/") == false) {
             System.out.println("ERROR: Invalid operator!");
@@ -187,6 +219,7 @@ public class FracCalc {
     public static boolean addition() {
         int mixedAns;
         int newDenom;
+        int newWhole;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -223,8 +256,12 @@ public class FracCalc {
                 answer = String.valueOf(mixedAns);
             }
             else {
-                answer = mixedAns + "/" + newDenom;
+                // mixed fraction check:
+                mixedFraction(mixedAns, newDenom);
             }
+
+
+
         }
         // if denominators not equal:
         else {
@@ -264,7 +301,8 @@ public class FracCalc {
                 answer = String.valueOf(mixedAns);
             }
             else {
-                answer = mixedAns + "/" + newDenom;
+                // mixed fraction check:
+                mixedFraction(mixedAns, newDenom);
             }
 
 
@@ -278,6 +316,7 @@ public class FracCalc {
     public static boolean subtraction() {
         int mixedAns;
         int newDenom;
+        int newWhole;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -315,7 +354,8 @@ public class FracCalc {
                 answer = String.valueOf(mixedAns);
             }
             else {
-                answer = mixedAns + "/" + newDenom;
+                // mixed fraction check:
+                mixedFraction(mixedAns, newDenom);
             }
         }
         // if denominators not equal:
@@ -354,7 +394,8 @@ public class FracCalc {
                 answer = String.valueOf(mixedAns);
             }
             else {
-                answer = mixedAns + "/" + newDenom;
+                // mixed fraction check:
+                mixedFraction(mixedAns, newDenom);
             }
         }
         return true;
@@ -363,6 +404,7 @@ public class FracCalc {
     public static boolean multiplication() {
         int mixedAns;
         int newDenom;
+        int newWhole;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -400,7 +442,8 @@ public class FracCalc {
             answer = String.valueOf(mixedAns);
         }
         else {
-            answer = mixedAns + "/" + newDenom;
+            // mixed fraction check:
+            mixedFraction(mixedAns, newDenom);
         }
 
 
@@ -411,6 +454,7 @@ public class FracCalc {
     public static boolean division() {
         int mixedAns;
         int newDenom;
+        int newWhole;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -448,7 +492,8 @@ public class FracCalc {
             answer = String.valueOf(mixedAns);
         }
         else {
-            answer = mixedAns + "/" + newDenom;
+            // mixed fraction check:
+            mixedFraction(mixedAns, newDenom);
         }
 
 
