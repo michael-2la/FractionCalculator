@@ -1,16 +1,22 @@
-
 import java.util.Objects;
 import java.util.Scanner;
+/**
+ * Class for a Fraction Calculator given two fractions and an operator
+ * @author Michelle La
+ */
 public class FracCalc {
+    // static variables for taking the two fractions and the eventual result
     public static int whole1;
     public static int numerator1;
     public static int denominator1;
     public static int whole2;
     public static int numerator2;
     public static int denominator2;
-    public static int operator;
-
     public static String answer;
+    /**
+     * prompts an input from user/takes input from user, initializes static variables, returns answer to fraction expression
+     * @return fraction expression answer
+     */
     public static void main(String[] args)
     {
         // TODO: Read the input from the user and call produceAnswer with an equation
@@ -43,29 +49,65 @@ public class FracCalc {
     //
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
+    /**
+     * takes input, splits each fraction + operator with a delimiter, checks for the validity of the expression
+     * returns answer depending on operator type (addition, subtraction, etc.) after calling calculation methods
+     * @param input from the line userInput in main method
+     * @return fraction expression answer
+     */
     public static String produceAnswer(String input) {
         // TODO: Implement this function to produce the solution to the input
         Scanner scan = new Scanner(input);
-
+        // splits expression according to different parts (fraction1, operator, fraction2)
         scan.useDelimiter(" ");
 
         String first = scan.next();
         String operat = scan.next();
         String second = scan.next();
 
-        // validate if the fractions are valid, if the operator is valid (Extra Credit)
-        validateNums(first,second);
-        // validateOper(operat);
+        // validate if the fractions are valid, if the operator is valid - EXTRA CREDIT
+        for (int i=0; i<first.length(); i++) {
+            if (first.charAt(i) != '/' && first.charAt(i) != '_') {
+                if (!Character.isDigit(first.charAt(i))) {
+                    // prints error message
+                    System.out.println("ERROR: Fraction is in an invalid format.");
+                    // prevents program from crashing
+                    return "";
+                }
 
 
+            }
+        }
+        for (int i=0; i<second.length(); i++) {
+            if (second.charAt(i) != '/' && second.charAt(i) != '_') {
+                if (!Character.isDigit(second.charAt(i))) {
+                    // prints error message
+                    System.out.println("ERROR: Fraction is in an invalid format.");
+                    // prevents program from crashing
+                    return "";
+                }
+
+            }
+        }
+
+        // checks if the operator is valid - EXTRA CREDIT
+        if (operat.equals("+") == false && operat.equals("-") == false && operat.equals("*") == false && operat.equals("/") == false) {
+            System.out.println("ERROR: Invalid operator!");
+            return "";
+        }
+
+        // splits respective fractions into whole, numerator, denominator
         findFrac1(first);
         findFrac2(second);
 
-        // validate if numerators/denominators/wholes of expression are valid (Extra Credit)
-        validateParts();
+        // validate if numerators/denominators/wholes of expression are valid - EXTRA CREDIT
+        if (denominator2 == 0 || denominator1 == 0) {
+            System.out.println("ERROR: Cannot divide by 0.");
+            return "";
+        }
 
 
-
+        // checks for operator type and then calls respective calculation method accordingly, and returns answer
         if (operat.equals("+")) {
             addition();
             return answer;
@@ -91,7 +133,11 @@ public class FracCalc {
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
-
+    /**
+     * program to find the greatest common factor of the numerator and denominator
+     * @param integers a and b for numerator, denominator
+     * @return greatest common factor of numerator/denominator
+     */
     public static int GCF(int a, int b) {
         if (b == 0) {
             return a;
@@ -101,10 +147,15 @@ public class FracCalc {
         }
 
     }
-
+    /**
+     * reduces answer to mixed fractions if numerator/denominator is greater than 1
+     * @param integers nums and denoms for the mixedAns numerator and newDenom denominator
+     * @return void
+     */
     public static void mixedFraction(int nums, int denoms) {
         // mixed fraction check:
         int wholes;
+        // takes absolute value of numerator/denominator for deciding on whether or not it is a mixed fraction
         if (Math.abs(nums/denoms) > 0) {
             wholes = nums/denoms;
 
@@ -134,42 +185,13 @@ public class FracCalc {
         }
     }
 
-    public static void validateOper(String operators) {
-        if (operators.equals("+") == false || operators.equals("-") == false || operators.equals("*") == false || operators.equals("/") == false) {
-            System.out.println("ERROR: Invalid operator!");
-        }
-    }
-
-    public static String validateNums(String firsts, String seconds) {
-        for (int i=0; i<firsts.length(); i++) {
-            // if the character is not a number:
-            if (firsts.charAt(i) < '0' || firsts.charAt(i) > '9') {
-                if (firsts.charAt(i) != '/' && firsts.charAt(i) != '_') {
-                    return "ERROR: Non-digit fraction!";
-                }
-            }
-
-        }
-        for (int i=0; i<seconds.length(); i++) {
-            // if the character is not a number:
-            if (seconds.charAt(i) < '0' || seconds.charAt(i) > '9') {
-                if (seconds.charAt(i) != '/' && seconds.charAt(i) != '_') {
-                    return "ERROR: Non-digit fraction!";
-                }
-            }
-        }
-        return "";
-
-    }
-
-    public static String validateParts() {
-        if (denominator1 == 0 || denominator2 == 0) {
-            return "ERROR: Cannot divide by 0";
-        }
-        return "";
-    }
 
 
+    /**
+     * program to split the first fraction into a whole number, numerator, and denominator
+     * @param string frac for the first fraction in the expression
+     * @return true once program has run
+     */
     public static boolean findFrac1(String frac) {
         Scanner scan = new Scanner(frac);
         // if mixed fraction, split whole and fractional then split numerator and denominator
@@ -187,6 +209,7 @@ public class FracCalc {
             numerator1 = Integer.parseInt(properFrac[0]);
             denominator1 = Integer.parseInt(properFrac[1]);
         }
+        // if not a fraction (whole number)
         else {
             numerator1 = Integer.parseInt(frac);
             denominator1 = 1;
@@ -195,7 +218,11 @@ public class FracCalc {
         return true;
 
     }
-
+    /**
+     * program to split the second fraction into a whole number, numerator, and denominator
+     * @param string frac for the second fraction in the expression
+     * @return true once program has run
+     */
     public static boolean findFrac2(String frac) {
         Scanner scan = new Scanner(frac);
         // if mixed fraction, split whole and fractional then split numerator and denominator
@@ -213,6 +240,7 @@ public class FracCalc {
             numerator2 = Integer.parseInt(properFrac[0]);
             denominator2 = Integer.parseInt(properFrac[1]);
         }
+        // if not a fraction (whole number)
         else {
             numerator2 = Integer.parseInt(frac);
             denominator2 = 1;
@@ -221,11 +249,13 @@ public class FracCalc {
         return true;
 
     }
-
+    /**
+     * program to add two fractions together with multiple cases, then send sum to answer variable
+     * @return true once program has run
+     */
     public static boolean addition() {
         int mixedAns;
         int newDenom;
-        int newWhole;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -271,7 +301,6 @@ public class FracCalc {
         }
         // if denominators not equal:
         else {
-
             // find common denominator
             newDenom = denominator1 * denominator2;
             // now convert fractions into having same denominator
@@ -318,11 +347,13 @@ public class FracCalc {
         return true;
 
     }
-
+    /**
+     * program to subtract two fractions together with multiple cases, then send difference to answer variable
+     * @return true once program has run
+     */
     public static boolean subtraction() {
         int mixedAns;
         int newDenom;
-        int newWhole;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -407,10 +438,13 @@ public class FracCalc {
         return true;
     }
 
+    /**
+     * program to multiply two fractions together with multiple cases, then send product to answer variable
+     * @return true once program has run
+     */
     public static boolean multiplication() {
         int mixedAns;
         int newDenom;
-        int newWhole;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -456,11 +490,13 @@ public class FracCalc {
         return true;
 
     }
-
+    /**
+     * program to divide two fractions together with multiple cases, then send dividend to answer variable
+     * @return true once program has run
+     */
     public static boolean division() {
         int mixedAns;
         int newDenom;
-        int newWhole;
         // turns into mixed fraction
         if (whole1 != 0) {
             if (whole1 < 0) {
@@ -508,4 +544,3 @@ public class FracCalc {
     }
 
 }
-
