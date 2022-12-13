@@ -1,3 +1,5 @@
+
+import java.util.Objects;
 import java.util.Scanner;
 public class FracCalc {
     public static int whole1;
@@ -19,11 +21,15 @@ public class FracCalc {
         numerator2 = 0;
         denominator2 = 1;
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter a fraction expression: ");
-        String userInput = scan.nextLine();
+        String userInput = "";
+        while (!userInput.equals("END")) {
+            System.out.println("Enter a fraction expression: ");
+            userInput = scan.nextLine();
 
-        produceAnswer(userInput);
-        System.out.println(answer);
+            produceAnswer(userInput);
+            System.out.println(answer);
+        }
+
 
 
 
@@ -99,7 +105,7 @@ public class FracCalc {
     public static void mixedFraction(int nums, int denoms) {
         // mixed fraction check:
         int wholes;
-        if (nums/denoms > 0) {
+        if (Math.abs(nums/denoms) > 0) {
             wholes = nums/denoms;
 
             if (nums < 0 ) {
@@ -113,7 +119,7 @@ public class FracCalc {
                 // makes only the whole number negative for formatting
                 denoms = -1 * denoms;
                 // update new numerator
-                nums = nums - (wholes * denoms);
+                nums = nums - (Math.abs(wholes * denoms));
                 answer = wholes + "_" + nums + "/" + denoms;
             }
             else {
@@ -339,7 +345,7 @@ public class FracCalc {
 
         // if denominators are equal:
         if (denominator1 == denominator2) {
-            mixedAns = numerator1 + numerator2;
+            mixedAns = numerator1 - numerator2;
             newDenom = denominator2;
             int gcf = GCF(mixedAns, newDenom);
             // reduce numerator and denominator
@@ -502,3 +508,4 @@ public class FracCalc {
     }
 
 }
+
